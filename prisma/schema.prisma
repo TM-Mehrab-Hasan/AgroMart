@@ -1,0 +1,390 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  CUSTOMER
+  SHOP_OWNER
+  SELLER
+  RIDER
+}
+
+enum ProductCategory {
+  CROPS
+  VEGETABLES
+  DAIRY
+  FISH
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+  OUT_OF_STOCK
+}
+
+enum ProductUnit {
+  KG
+  LBS
+  PIECE
+  LITER
+  DOZEN
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY_FOR_PICKUP
+  PICKED_UP
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  BKASH
+  NAGAD
+  ROCKET
+  BANK_TRANSFER
+  STRIPE
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum NotificationType {
+  ORDER_PLACED
+  ORDER_CONFIRMED
+  ORDER_DELIVERED
+  PAYMENT_RECEIVED
+  NEW_PRODUCT
+  STOCK_LOW
+  SYSTEM_ANNOUNCEMENT
+}
+
+// User and Authentication Models
+model User {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  emailVerified     DateTime?
+  name              String
+  phone             String?
+  phoneVerified     Boolean  @default(false)
+  image             String?
+  role              UserRole @default(CUSTOMER)
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  accounts          Account[]
+  sessions          Session[]
+  addresses         Address[]
+  products          Product[]
+  shops             Shop[]
+  orders            Order[]
+  riderProfile      RiderProfile?
+  reviews           Review[]
+  notifications     Notification[]
+  orderItems        OrderItem[]
+  riderOrders       Order[] @relation("RiderOrders")
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verificationtokens")
+}
+
+// Address Model
+model Address {
+  id            String  @id @default(cuid())
+  userId        String
+  name          String
+  phone         String
+  addressLine1  String
+  addressLine2  String?
+  city          String
+  state         String
+  postalCode    String
+  country       String  @default("Bangladesh")
+  isDefault     Boolean @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shops         Shop[]
+  orders        Order[]
+
+  @@map("addresses")
+}
+
+// Shop Model
+model Shop {
+  id            String   @id @default(cuid())
+  name          String
+  description   String?
+  ownerId       String
+  addressId     String
+  isVerified    Boolean  @default(false)
+  rating        Float    @default(0.0)
+  totalSales    Int      @default(0)
+  commission    Float    @default(5.0) // percentage
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  owner         User      @relation(fields: [ownerId], references: [id])
+  address       Address   @relation(fields: [addressId], references: [id])
+  products      Product[]
+  reviews       Review[]
+
+  @@map("shops")
+}
+
+// Product Models
+model Product {
+  id                String         @id @default(cuid())
+  name              String
+  description       String
+  category          ProductCategory
+  price             Float
+  unit              ProductUnit
+  stockQuantity     Int
+  minOrderQuantity  Int            @default(1)
+  images            String[]
+  sellerId          String
+  shopId            String?
+  status            ProductStatus  @default(ACTIVE)
+  isOrganic         Boolean        @default(false)
+  harvestDate       DateTime?
+  expiryDate        DateTime?
+  views             Int            @default(0)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  // Relations
+  seller            User           @relation(fields: [sellerId], references: [id])
+  shop              Shop?          @relation(fields: [shopId], references: [id])
+  orderItems        OrderItem[]
+  reviews           Review[]
+
+  @@map("products")
+}
+
+// Order Models
+model Order {
+  id                     String        @id @default(cuid())
+  orderNumber            String        @unique
+  customerId             String
+  subtotal               Float
+  deliveryFee            Float         @default(0)
+  codFee                 Float?        // Cash on delivery fee
+  discount               Float         @default(0)
+  total                  Float
+  status                 OrderStatus   @default(PENDING)
+  paymentMethod          PaymentMethod
+  paymentStatus          PaymentStatus @default(PENDING)
+  deliveryAddressId      String
+  riderId                String?
+  estimatedDeliveryTime  DateTime?
+  deliveredAt            DateTime?
+  notes                  String?
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+
+  // Relations
+  customer               User          @relation(fields: [customerId], references: [id])
+  deliveryAddress        Address       @relation(fields: [deliveryAddressId], references: [id])
+  rider                  User?         @relation("RiderOrders", fields: [riderId], references: [id])
+  items                  OrderItem[]
+  reviews                Review[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id          String  @id @default(cuid())
+  orderId     String
+  productId   String
+  sellerId    String
+  quantity    Int
+  unitPrice   Float
+  totalPrice  Float
+  createdAt   DateTime @default(now())
+
+  // Relations
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product @relation(fields: [productId], references: [id])
+  seller      User    @relation(fields: [sellerId], references: [id])
+
+  @@map("order_items")
+}
+
+// Delivery Models
+model DeliveryArea {
+  id                    String  @id @default(cuid())
+  name                  String
+  boundaries            String  // GeoJSON or similar
+  deliveryFee           Float
+  estimatedDeliveryTime Int     // in minutes
+  isActive              Boolean @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  // Relations
+  riders                RiderProfile[]
+
+  @@map("delivery_areas")
+}
+
+model RiderProfile {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  vehicleType     String
+  vehicleNumber   String
+  licenseNumber   String
+  isVerified      Boolean   @default(false)
+  isAvailable     Boolean   @default(true)
+  currentLat      Float?
+  currentLng      Float?
+  totalDeliveries Int       @default(0)
+  rating          Float     @default(0.0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deliveryAreas   DeliveryArea[]
+  reviews         Review[]
+
+  @@map("rider_profiles")
+}
+
+// Review Model
+model Review {
+  id           String   @id @default(cuid())
+  orderId      String?
+  productId    String?
+  shopId       String?
+  riderId      String?
+  customerId   String
+  rating       Int      // 1-5
+  comment      String?
+  createdAt    DateTime @default(now())
+
+  // Relations
+  order        Order?        @relation(fields: [orderId], references: [id])
+  product      Product?      @relation(fields: [productId], references: [id])
+  shop         Shop?         @relation(fields: [shopId], references: [id])
+  rider        RiderProfile? @relation(fields: [riderId], references: [id])
+  customer     User          @relation(fields: [customerId], references: [id])
+
+  @@map("reviews")
+}
+
+// Notification Model
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  isRead    Boolean          @default(false)
+  data      Json?            // Additional data as JSON
+  createdAt DateTime         @default(now())
+
+  // Relations
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+// Coupon Model
+model Coupon {
+  id            String    @id @default(cuid())
+  code          String    @unique
+  description   String?
+  discountType  String    // PERCENTAGE or FIXED
+  discountValue Float
+  minOrderValue Float?
+  maxDiscount   Float?
+  usageLimit    Int?
+  usedCount     Int       @default(0)
+  isActive      Boolean   @default(true)
+  validFrom     DateTime
+  validUntil    DateTime
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("coupons")
+}
+
+// Analytics Model
+model Analytics {
+  id                String   @id @default(cuid())
+  date              DateTime @unique @db.Date
+  totalOrders       Int      @default(0)
+  totalSales        Float    @default(0)
+  totalUsers        Int      @default(0)
+  totalProducts     Int      @default(0)
+  avgOrderValue     Float    @default(0)
+  topCategory       ProductCategory?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("analytics")
+}
