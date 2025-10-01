@@ -132,7 +132,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Mehrab Hasan**
-- GitHub: [@TM-Mehrab-Hasan](https://github.com/TM-Mehrab-Hasan)
+- Portfolio: [TM-Mehrab-Hasan](https://tm-mehrab-hasan.github.io/)
 
 ---
 
