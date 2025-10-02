@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/common/Header";
 import { Footer } from "@/components/common/Footer";
+import ReduxTestComponent from "@/components/debug/ReduxTestComponent";
 import { Wheat, Fish, Milk, Carrot, ShoppingCart, Users, Truck, Shield } from "lucide-react";
 import Link from "next/link";
 import { getUserRoleDisplayName } from "@/lib/auth/permissions";
@@ -62,6 +63,11 @@ export default function Home() {
               </p>
             </div>
           )}
+          
+          {/* Redux Store Debug Component */}
+          <div className="mt-8 max-w-md mx-auto">
+            <ReduxTestComponent />
+          </div>
           
           <div className="flex gap-4 justify-center flex-wrap">
             {session?.user ? (

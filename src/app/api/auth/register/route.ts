@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
         password: hashedPassword,
         role: role as UserRole,
         isActive: true,
-      },
+      } as any, // Type assertion to allow password field
       select: {
         id: true,
         name: true,

@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
-        });
+        }) as any; // Type assertion to access password field
 
         if (!user || !user.password) {
           throw new Error("Invalid email or password");
@@ -44,10 +44,10 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           name: user.name,
           role: user.role,
-          image: user.image,
-          phone: user.phone,
+          image: user.image || undefined,
+          phone: user.phone || undefined,
           isActive: user.isActive,
-          emailVerified: user.emailVerified,
+          emailVerified: user.emailVerified || undefined,
           phoneVerified: user.phoneVerified,
         };
       },
@@ -73,14 +73,12 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user, account }) {
       // Initial sign in
       if (account && user) {
-        return {
-          ...token,
-          role: user.role,
-          phone: user.phone,
-          isActive: user.isActive,
-          emailVerified: user.emailVerified,
-          phoneVerified: user.phoneVerified,
-        };
+        token.role = user.role;
+        token.phone = user.phone;
+        token.isActive = user.isActive;
+        token.emailVerified = user.emailVerified || undefined;
+        token.phoneVerified = user.phoneVerified;
+        return token;
       }
 
       // Return previous token if the access token has not expired yet
@@ -137,7 +135,6 @@ export const authOptions: NextAuthOptions = {
 
   pages: {
     signIn: "/auth/signin",
-    signUp: "/auth/signup",
     error: "/auth/error",
   },
 
