@@ -1,11 +1,18 @@
+"use client";
+
+import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/common/Header";
 import { Footer } from "@/components/common/Footer";
 import { Wheat, Fish, Milk, Carrot, ShoppingCart, Users, Truck, Shield } from "lucide-react";
+import Link from "next/link";
+import { getUserRoleDisplayName } from "@/lib/auth/permissions";
 
 export default function Home() {
+  const { data: session } = useSession();
+
   const categories = [
     { icon: Wheat, name: "Crops", description: "Rice, wheat, grains", color: "bg-amber-100 text-amber-800" },
     { icon: Carrot, name: "Vegetables", description: "Fresh produce", color: "bg-green-100 text-green-800" },
@@ -27,24 +34,91 @@ export default function Home() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 text-center">
         <div className="max-w-4xl mx-auto">
-          <Badge className="mb-4 bg-green-100 text-green-800 hover:bg-green-200">
-            🌾 Agricultural Marketplace Platform
-          </Badge>
-          <h1 className="text-5xl font-bold text-gray-800 mb-6">
-            Connecting Farmers to
-            <span className="text-green-600"> Markets</span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            A comprehensive platform that connects farmers, fishermen, and dairy producers 
-            directly with customers through efficient marketplace management.
-          </p>
+          {session?.user ? (
+            <div className="mb-6">
+              <Badge className="mb-4 bg-green-100 text-green-800 hover:bg-green-200">
+                Welcome back, {getUserRoleDisplayName(session.user.role)}! 🌾
+              </Badge>
+              <h1 className="text-5xl font-bold text-gray-800 mb-6">
+                Welcome back,
+                <span className="text-green-600"> {session.user.name}</span>!
+              </h1>
+              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                Continue exploring fresh agricultural products and manage your {session.user.role.toLowerCase()} activities.
+              </p>
+            </div>
+          ) : (
+            <div className="mb-6">
+              <Badge className="mb-4 bg-green-100 text-green-800 hover:bg-green-200">
+                🌾 Agricultural Marketplace Platform
+              </Badge>
+              <h1 className="text-5xl font-bold text-gray-800 mb-6">
+                Connecting Farmers to
+                <span className="text-green-600"> Markets</span>
+              </h1>
+              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                A comprehensive platform that connects farmers, fishermen, and dairy producers 
+                directly with customers through efficient marketplace management.
+              </p>
+            </div>
+          )}
+          
           <div className="flex gap-4 justify-center flex-wrap">
-            <Button size="lg" className="bg-green-600 hover:bg-green-700">
-              Start Selling
-            </Button>
-            <Button size="lg" variant="outline">
-              Browse Products
-            </Button>
+            {session?.user ? (
+              <>
+                {session.user.role === "CUSTOMER" && (
+                  <>
+                    <Button size="lg" className="bg-green-600 hover:bg-green-700" asChild>
+                      <Link href="/products">Browse Products</Link>
+                    </Button>
+                    <Button size="lg" variant="outline" asChild>
+                      <Link href="/orders">My Orders</Link>
+                    </Button>
+                  </>
+                )}
+                {(session.user.role === "SELLER" || session.user.role === "SHOP_OWNER") && (
+                  <>
+                    <Button size="lg" className="bg-green-600 hover:bg-green-700" asChild>
+                      <Link href={session.user.role === "SELLER" ? "/seller" : "/shop"}>
+                        Manage Products
+                      </Link>
+                    </Button>
+                    <Button size="lg" variant="outline" asChild>
+                      <Link href="/analytics">View Analytics</Link>
+                    </Button>
+                  </>
+                )}
+                {session.user.role === "RIDER" && (
+                  <>
+                    <Button size="lg" className="bg-green-600 hover:bg-green-700" asChild>
+                      <Link href="/rider">Available Orders</Link>
+                    </Button>
+                    <Button size="lg" variant="outline" asChild>
+                      <Link href="/rider/earnings">Earnings</Link>
+                    </Button>
+                  </>
+                )}
+                {session.user.role === "ADMIN" && (
+                  <>
+                    <Button size="lg" className="bg-green-600 hover:bg-green-700" asChild>
+                      <Link href="/admin">Admin Dashboard</Link>
+                    </Button>
+                    <Button size="lg" variant="outline" asChild>
+                      <Link href="/admin/analytics">Platform Analytics</Link>
+                    </Button>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <Button size="lg" className="bg-green-600 hover:bg-green-700" asChild>
+                  <Link href="/auth/signup">Start Selling</Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild>
+                  <Link href="/products">Browse Products</Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </section>
