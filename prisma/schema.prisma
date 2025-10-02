@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -100,6 +100,7 @@ model User {
   products          Product[]
   shops             Shop[]
   orders            Order[]
+  cartItems         CartItem[]
   riderProfile      RiderProfile?
   reviews           Review[]
   notifications     Notification[]
@@ -115,12 +116,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -206,13 +207,15 @@ model Product {
   unit              ProductUnit
   stockQuantity     Int
   minOrderQuantity  Int            @default(1)
-  images            String[]
+  maxOrderQuantity  Int?
+  images            String // JSON string for SQLite compatibility
   sellerId          String
   shopId            String?
   status            ProductStatus  @default(ACTIVE)
   isOrganic         Boolean        @default(false)
   harvestDate       DateTime?
   expiryDate        DateTime?
+  location          String?
   views             Int            @default(0)
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
@@ -220,10 +223,28 @@ model Product {
   // Relations
   seller            User           @relation(fields: [sellerId], references: [id])
   shop              Shop?          @relation(fields: [shopId], references: [id])
+  cartItems         CartItem[]
   orderItems        OrderItem[]
   reviews           Review[]
 
   @@map("products")
+}
+
+// Cart Model
+model CartItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@map("cart_items")
 }
 
 // Order Models
@@ -377,7 +398,7 @@ model Coupon {
 // Analytics Model
 model Analytics {
   id                String   @id @default(cuid())
-  date              DateTime @unique @db.Date
+  date              DateTime @unique
   totalOrders       Int      @default(0)
   totalSales        Float    @default(0)
   totalUsers        Int      @default(0)

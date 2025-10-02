@@ -301,7 +301,10 @@ async function main() {
 
   for (const productData of products) {
     await prisma.product.create({
-      data: productData,
+      data: {
+        ...productData,
+        images: JSON.stringify(productData.images), // Convert array to JSON string
+      },
     });
   }
 

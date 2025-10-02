@@ -12,7 +12,11 @@
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
     "db:seed": "tsx prisma/seed.ts",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "test:smoke": "node scripts/smoke-test.js",
+    "test:api": "node scripts/test-api.js",
+    "test:dev": "npm run test:smoke && npm run dev",
+    "postbuild": "npm run test:smoke"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
