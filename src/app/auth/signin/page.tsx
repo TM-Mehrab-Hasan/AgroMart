@@ -223,7 +223,7 @@ export default function SignInPage() {
               </div>
 
               <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 border border-green-200">
-                <p className="text-gray-700 font-medium mb-1">Don't have an account?</p>
+                <p className="text-gray-700 font-medium mb-1">Don&apos;t have an account?</p>
                 <Link 
                   href="/auth/signup" 
                   className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-bold hover:underline transition-all duration-300"

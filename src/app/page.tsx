@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { getUserRoleDisplayName } from "@/lib/auth/permissions";
-import { fetchLandingData, formatBDTaka, type LandingData, type LandingStat, type LandingCategory, type LandingProduct, type LandingTestimonial } from "@/lib/api/landing";
+import { fetchLandingData, formatBDTaka, type LandingData } from "@/lib/api/landing";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -423,7 +423,7 @@ export default function Home() {
               Why Choose AgroMart?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We're revolutionizing how fresh agricultural products reach your table
+              We&apos;re revolutionizing how fresh agricultural products reach your table
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -469,7 +469,7 @@ export default function Home() {
                     ))}
                   </div>
                   <p className="text-gray-600 mb-6 italic leading-relaxed">
-                    "{testimonial.comment}"
+                    &quot;{testimonial.comment}&quot;
                   </p>
                   <div className="flex items-center">
                     <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
@@ -500,7 +500,7 @@ export default function Home() {
               Join Our Community
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Whether you're a farmer, customer, shop owner, rider, or admin, AgroMart has a place for you
+              Whether you&apos;re a farmer, customer, shop owner, rider, or admin, AgroMart has a place for you
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">

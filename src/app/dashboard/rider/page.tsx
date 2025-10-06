@@ -149,7 +149,7 @@ export default function RiderDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Today's Deliveries</CardTitle>
+              <CardTitle className="text-sm font-medium">Today&apos;s Deliveries</CardTitle>
               <Truck className="h-4 w-4 text-orange-600" />
             </CardHeader>
             <CardContent>
@@ -160,7 +160,7 @@ export default function RiderDashboard() {
 
           <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Today's Earnings</CardTitle>
+              <CardTitle className="text-sm font-medium">Today&apos;s Earnings</CardTitle>
               <DollarSign className="h-4 w-4 text-orange-600" />
             </CardHeader>
             <CardContent>
@@ -286,7 +286,7 @@ export default function RiderDashboard() {
           <TabsContent value="completed" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Today's Completed Deliveries</CardTitle>
+                <CardTitle>Today&apos;s Completed Deliveries</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">

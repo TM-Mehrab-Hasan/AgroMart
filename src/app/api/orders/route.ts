@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { OrderStatus } from "@prisma/client";
 
 // GET /api/orders - Get user's orders or all orders (admin)
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse<any>> {
   try {
     const session = await getServerSession(authOptions);
     

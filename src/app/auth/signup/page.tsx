@@ -31,7 +31,7 @@ export default function SignUpPage() {
     setError(""); // Clear error when user starts typing
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");

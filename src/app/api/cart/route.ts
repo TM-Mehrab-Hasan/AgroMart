@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { CartItem } from "@prisma/client";
 
 // GET /api/cart - Get user's cart
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse<any>> {
   try {
     const session = await getServerSession(authOptions);
     
@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/cart - Add item to cart
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse<any>> {
   try {
     const session = await getServerSession(authOptions);
     
