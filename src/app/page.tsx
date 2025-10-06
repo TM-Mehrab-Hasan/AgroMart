@@ -13,6 +13,8 @@ import {
   Fish, 
   Milk, 
   Carrot, 
+  Apple,
+  Beef,
   ShoppingCart, 
   Users, 
   Truck, 
@@ -61,8 +63,12 @@ export default function Home() {
   const categoryIcons = {
     "Crops": Wheat,
     "Vegetables": Carrot,
+    "Fruits": Apple,
     "Dairy": Milk,
-    "Fish": Fish
+    "Fish": Fish,
+    "Meat": Beef,
+    "Grains": Wheat,
+    "Organic": Shield
   };
 
   const features = [

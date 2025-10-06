@@ -26,11 +26,12 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState("name");
   const [viewMode, setViewMode] = useState("grid");
 
-  // Dummy product data
+  // Comprehensive product data with all 8 categories
   const products = [
+    // Crops
     {
       id: 1,
-      name: "Organic Rice",
+      name: "Premium Basmati Rice",
       category: "Crops",
       price: 120,
       unit: "kg",
@@ -39,10 +40,24 @@ export default function ProductsPage() {
       reviews: 23,
       inStock: true,
       image: "/api/placeholder/300/200",
-      description: "Premium organic basmati rice, naturally grown without chemicals"
+      description: "High-quality aromatic basmati rice from local farms"
     },
     {
       id: 2,
+      name: "Golden Wheat",
+      category: "Crops",
+      price: 85,
+      unit: "kg",
+      seller: "Golden Grains",
+      rating: 4.2,
+      reviews: 31,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Fresh wheat grains perfect for flour production"
+    },
+    // Vegetables
+    {
+      id: 3,
       name: "Fresh Tomatoes",
       category: "Vegetables",
       price: 60,
@@ -52,24 +67,105 @@ export default function ProductsPage() {
       reviews: 18,
       inStock: true,
       image: "/api/placeholder/300/200",
-      description: "Juicy red tomatoes, perfect for cooking and salads"
+      description: "Ripe, juicy tomatoes grown without pesticides"
     },
     {
-      id: 3,
-      name: "Fresh Milk",
-      category: "Dairy",
+      id: 4,
+      name: "Organic Carrots",
+      category: "Vegetables",
+      price: 70,
+      unit: "kg",
+      seller: "Leafy Greens Farm",
+      rating: 4.6,
+      reviews: 27,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Sweet, crunchy carrots grown organically"
+    },
+    // Fruits
+    {
+      id: 5,
+      name: "Fresh Mangoes",
+      category: "Fruits",
+      price: 180,
+      unit: "kg",
+      seller: "Tropical Fruits Co.",
+      rating: 4.7,
+      reviews: 35,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Sweet Himsagar mangoes from Chapainawabganj"
+    },
+    {
+      id: 6,
+      name: "Organic Bananas",
+      category: "Fruits",
       price: 60,
+      unit: "dozen",
+      seller: "Fresh Fruit Farm",
+      rating: 4.3,
+      reviews: 22,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Naturally ripened organic bananas"
+    },
+    {
+      id: 7,
+      name: "Local Oranges",
+      category: "Fruits",
+      price: 120,
+      unit: "kg",
+      seller: "Citrus Valley",
+      rating: 4.5,
+      reviews: 19,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Juicy sweet oranges from Sylhet hills"
+    },
+    // Dairy
+    {
+      id: 8,
+      name: "Fresh Cow Milk",
+      category: "Dairy",
+      price: 80,
       unit: "liter",
       seller: "Dairy Fresh Farm",
       rating: 4.8,
       reviews: 45,
       inStock: true,
       image: "/api/placeholder/300/200",
-      description: "Pure cow milk, daily fresh from local dairy farm"
+      description: "Pure, fresh milk from grass-fed cows"
     },
     {
-      id: 4,
-      name: "Salmon Fish",
+      id: 9,
+      name: "Homemade Yogurt",
+      category: "Dairy",
+      price: 120,
+      unit: "kg",
+      seller: "Healthy Dairy Co.",
+      rating: 4.6,
+      reviews: 19,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Creamy, probiotic-rich yogurt made from fresh milk"
+    },
+    // Fish
+    {
+      id: 10,
+      name: "Fresh Rohu Fish",
+      category: "Fish",
+      price: 350,
+      unit: "kg",
+      seller: "River Fresh",
+      rating: 4.4,
+      reviews: 28,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Freshly caught Rohu fish from local rivers"
+    },
+    {
+      id: 11,
+      name: "Hilsa Fish",
       category: "Fish",
       price: 800,
       unit: "kg",
@@ -78,63 +174,131 @@ export default function ProductsPage() {
       reviews: 12,
       inStock: false,
       image: "/api/placeholder/300/200",
-      description: "Premium Atlantic salmon, fresh catch of the day"
+      description: "Premium quality Hilsa fish, the king of Bengali fish"
+    },
+    // Meat
+    {
+      id: 12,
+      name: "Fresh Chicken",
+      category: "Meat",
+      price: 280,
+      unit: "kg",
+      seller: "Halal Meat Co.",
+      rating: 4.5,
+      reviews: 33,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Farm-raised halal chicken, antibiotic-free"
     },
     {
-      id: 5,
-      name: "Wheat Flour",
-      category: "Crops",
+      id: 13,
+      name: "Goat Meat",
+      category: "Meat",
+      price: 850,
+      unit: "kg",
+      seller: "Fresh Meat Farm",
+      rating: 4.7,
+      reviews: 15,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Fresh goat meat from local farms"
+    },
+    {
+      id: 14,
+      name: "Beef (Premium Cut)",
+      category: "Meat",
+      price: 650,
+      unit: "kg",
+      seller: "Premium Meats",
+      rating: 4.6,
+      reviews: 21,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Premium quality beef from grass-fed cattle"
+    },
+    // Grains
+    {
+      id: 15,
+      name: "Red Lentils (Masoor)",
+      category: "Grains",
+      price: 85,
+      unit: "kg",
+      seller: "Pulse Paradise",
+      rating: 4.3,
+      reviews: 26,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "High-protein red lentils for healthy cooking"
+    },
+    {
+      id: 16,
+      name: "Chickpeas (Chola)",
+      category: "Grains",
+      price: 95,
+      unit: "kg",
+      seller: "Grain Masters",
+      rating: 4.4,
+      reviews: 18,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Premium quality chickpeas rich in protein"
+    },
+    {
+      id: 17,
+      name: "Black Beans",
+      category: "Grains",
+      price: 120,
+      unit: "kg",
+      seller: "Healthy Grains",
+      rating: 4.5,
+      reviews: 14,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Organic black beans perfect for healthy meals"
+    },
+    // Organic
+    {
+      id: 18,
+      name: "Organic Spinach",
+      category: "Organic",
       price: 45,
       unit: "kg",
-      seller: "Golden Grains",
-      rating: 4.2,
-      reviews: 31,
-      inStock: true,
-      image: "/api/placeholder/300/200",
-      description: "Fresh ground wheat flour, perfect for baking"
-    },
-    {
-      id: 6,
-      name: "Green Spinach",
-      category: "Vegetables",
-      price: 40,
-      unit: "bunch",
-      seller: "Leafy Greens Farm",
-      rating: 4.6,
-      reviews: 27,
-      inStock: true,
-      image: "/api/placeholder/300/200",
-      description: "Fresh spinach leaves, rich in iron and vitamins"
-    },
-    {
-      id: 7,
-      name: "Greek Yogurt",
-      category: "Dairy",
-      price: 120,
-      unit: "500g",
-      seller: "Healthy Dairy Co.",
-      rating: 4.6,
-      reviews: 19,
-      inStock: true,
-      image: "/api/placeholder/300/200",
-      description: "Thick creamy Greek yogurt, high in protein"
-    },
-    {
-      id: 8,
-      name: "Prawns",
-      category: "Fish",
-      price: 1200,
-      unit: "kg",
-      seller: "Coastal Seafood",
+      seller: "Certified Organic Farm",
       rating: 4.8,
-      reviews: 8,
+      reviews: 32,
       inStock: true,
       image: "/api/placeholder/300/200",
-      description: "Large fresh prawns, perfect for special occasions"
+      description: "Certified organic fresh spinach leaves"
+    },
+    {
+      id: 19,
+      name: "Organic Honey",
+      category: "Organic",
+      price: 450,
+      unit: "kg",
+      seller: "Pure Honey Co.",
+      rating: 4.9,
+      reviews: 41,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Pure organic wildflower honey, unprocessed"
+    },
+    {
+      id: 20,
+      name: "Organic Brown Rice",
+      category: "Organic",
+      price: 140,
+      unit: "kg",
+      seller: "Organic Valley",
+      rating: 4.6,
+      reviews: 25,
+      inStock: true,
+      image: "/api/placeholder/300/200",
+      description: "Certified organic brown rice with natural fiber"
     }
   ];
 
-  const categories = ["all", "Crops", "Vegetables", "Dairy", "Fish"];
+  const categories = ["all", "Crops", "Vegetables", "Fruits", "Dairy", "Fish", "Meat", "Grains", "Organic"];
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

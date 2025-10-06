@@ -144,7 +144,7 @@ function getFallbackLandingData(): LandingData {
     categories: [
       { 
         name: "Crops", 
-        description: "Rice, wheat, grains", 
+        description: "Rice, wheat, corn", 
         color: "bg-amber-100 text-amber-800", 
         href: "/categories/crops", 
         count: "Loading..." 
@@ -154,6 +154,13 @@ function getFallbackLandingData(): LandingData {
         description: "Fresh produce", 
         color: "bg-green-100 text-green-800", 
         href: "/categories/vegetables", 
+        count: "Loading..." 
+      },
+      { 
+        name: "Fruits", 
+        description: "Fresh seasonal fruits", 
+        color: "bg-red-100 text-red-800", 
+        href: "/categories/fruits", 
         count: "Loading..." 
       },
       { 
@@ -168,6 +175,27 @@ function getFallbackLandingData(): LandingData {
         description: "Fresh fish & seafood", 
         color: "bg-cyan-100 text-cyan-800", 
         href: "/categories/fish", 
+        count: "Loading..." 
+      },
+      { 
+        name: "Meat", 
+        description: "Fresh halal meat", 
+        color: "bg-rose-100 text-rose-800", 
+        href: "/categories/meat", 
+        count: "Loading..." 
+      },
+      { 
+        name: "Grains", 
+        description: "Lentils, beans, pulses", 
+        color: "bg-yellow-100 text-yellow-800", 
+        href: "/categories/grains", 
+        count: "Loading..." 
+      },
+      { 
+        name: "Organic", 
+        description: "Certified organic products", 
+        color: "bg-emerald-100 text-emerald-800", 
+        href: "/categories/organic", 
         count: "Loading..." 
       }
     ],
