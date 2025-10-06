@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth-options";
 import { prisma } from "@/lib/prisma";
+import { OrderStatus } from "@prisma/client";
 
 // GET /api/orders - Get user's orders or all orders (admin)
 export async function GET(request: NextRequest) {
@@ -18,11 +19,11 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
-    const status = searchParams.get('status') as any;
+    const status = searchParams.get('status') as OrderStatus | null;
     const skip = (page - 1) * limit;
 
     // Build where clause based on user role
-    const where: any = {};
+    const where: Record<string, any> = {};
     
     if (session.user.role === 'ADMIN') {
       // Admin can see all orders

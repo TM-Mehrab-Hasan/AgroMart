@@ -7,114 +7,71 @@ A comprehensive full-stack agricultural marketplace built with Next.js 15, TypeS
 ![Prisma](https://img.shields.io/badge/Prisma-6.16.3-green?style=for-the-badge&logo=prisma)
 ![SQLite](https://img.shields.io/badge/SQLite-dev-lightblue?style=for-the-badge&logo=sqlite)
 
-## ✨ Features
+## ✨ Recent Updates (October 2025)
 
-### 🛍️ **Core Marketplace**
-- **Multi-category Products**: 8 categories (Crops, Vegetables, Fruits, Dairy, Fish, Meat, Grains)
-- **Advanced Search & Filtering**: Location-based, price range, organic certification
-- **Shop Management**: Multi-shop support with location-based discovery
-- **Order Management**: Complete lifecycle from cart to delivery
-- **Review & Rating System**: Product and shop reviews with moderation
+### 🚀 **New Features**
+- **Dynamic Data Integration**: Complete migration from static to dynamic database-driven content
+- **BD Taka Currency Support**: Native Bangladesh Taka (৳) formatting throughout the application
+- **Enhanced UI/UX**: Modern gradient designs with greenish-white backgrounds
+- **Role-Based Authentication**: Secure admin access with public registration controls
+- **Responsive Design**: Compressed, mobile-optimized layouts
 
-### 👥 **User Management**
-- **5 User Roles**: Admin, Customer, Shop Owner, Seller, Rider
-- **Role-based Access Control**: Secure permission system
-- **Profile Management**: Comprehensive user profiles
-- **Address Management**: Multiple delivery addresses
+### 🛠️ **Technical Improvements**
+- **Custom Tabs Component**: Eliminated external dependencies for better performance
+- **Header Navigation**: Fixed category links and improved dropdown design
+- **Import Resolution**: Resolved all compilation issues with custom UI components
+- **API Integration**: Complete backend with Express.js and landing page endpoints
+- **Database Seeding**: Pre-populated with realistic agricultural products and users
 
-### 🛒 **E-commerce Features**
+## 🛍️ **Core Features**
+
+### **Multi-Role Platform**
+- **👥 Customers** - Browse and purchase agricultural products
+- **🚜 Farmers/Producers** - Sell directly to customers or shops
+- **🏪 Shop Owners** - Buy from farmers and resell with markup
+- **🏍️ Delivery Riders** - Handle order deliveries based on coverage areas
+- **👨‍💼 Administrators** - Platform management and oversight
+
+### **Product Categories**
+- **🌾 Crops** - Rice, wheat, grains, pulses
+- **🥕 Vegetables** - Fresh produce, leafy greens
+- **🍎 Fruits** - Seasonal and exotic fruits
+- **🥛 Dairy** - Milk, cheese, yogurt, butter
+- **🐟 Fish** - Fresh fish and seafood
+- **🥩 Meat** - Poultry, beef, goat meat
+- **🌰 Grains** - Various grain products
+- **🌿 Organic** - Certified organic products
+
+### **E-commerce Features**
 - **Shopping Cart**: Persistent cart with quantity management
-- **Checkout Process**: Streamlined ordering with coupon support
-- **Payment Integration**: Stripe-ready payment system
-- **Order Tracking**: Real-time order status updates
-
-### 🔔 **Communication**
-- **Notification System**: Real-time notifications for order updates
-- **Email Integration**: Automated email notifications
-- **In-app Messaging**: Notification center with preferences
+- **Order Management**: Complete lifecycle from cart to delivery
+- **Payment Integration**: Multiple payment methods including BD mobile banking
+- **Review System**: Product and seller ratings
+- **Search & Filter**: Advanced product discovery
+- **Location-Based**: Area-specific product availability
 
 ## 🏗️ Technical Architecture
 
 ### **Frontend Stack**
-- **Next.js 15.5.4** with Turbopack for fast development
+- **Next.js 15.5.4** with App Router and Turbopack
 - **React 19** with modern hooks and patterns
 - **TypeScript** for type safety
-- **Tailwind CSS 4** for responsive design
-- **Radix UI** for accessible components
-- **Redux Toolkit** for state management
+- **Tailwind CSS** for responsive design
+- **Custom UI Components** (eliminated external dependencies)
+- **Lucide React** for beautiful icons
 
 ### **Backend Stack**
-- **Next.js API Routes** with RESTful architecture
+- **Express.js 4.18.2** API server
 - **Prisma ORM** for database management
-- **NextAuth.js** for authentication
-- **bcryptjs** for password hashing
-- **SQLite** (development) / **PostgreSQL** (production)
+- **SQLite** (development) / **PostgreSQL** (production ready)
+- **bcryptjs** for secure password hashing
+- **CORS enabled** for cross-origin requests
 
 ### **Database Schema**
 15+ interconnected models including:
-- Users, Products, Shops, Orders
-- Reviews, Cart, Addresses, Notifications
-- Coupons, Analytics, Authentication tables
-
-## 🔌 API Documentation
-
-### **40+ REST Endpoints**
-
-#### **Products** (`/api/products/`)
-```
-GET    /api/products              # List products with filtering
-POST   /api/products              # Create product (Seller/Shop Owner)
-GET    /api/products/featured     # Featured products
-GET    /api/products/search       # Advanced search
-GET    /api/products/[id]         # Product details
-PUT    /api/products/[id]         # Update product
-DELETE /api/products/[id]         # Delete product
-```
-
-#### **Shops** (`/api/shops/`)
-```
-GET    /api/shops                 # List shops
-POST   /api/shops                 # Create shop (Shop Owner)
-GET    /api/shops/[id]            # Shop details
-PUT    /api/shops/[id]            # Update shop
-GET    /api/shops/[id]/products   # Shop products
-```
-
-#### **Orders** (`/api/orders/`)
-```
-GET    /api/orders                # List orders (role-based)
-POST   /api/orders                # Create order
-GET    /api/orders/[id]           # Order details
-PUT    /api/orders/[id]           # Update order status
-```
-
-#### **Users** (`/api/users/`)
-```
-GET    /api/users                 # List users (Admin)
-GET    /api/users/profile         # Current user profile
-PUT    /api/users/profile         # Update profile
-GET    /api/users/[id]            # User details
-PUT    /api/users/[id]            # Update user (Admin)
-```
-
-[View complete API documentation →](docs/API_DOCUMENTATION.md)
-
-## 🧪 Testing Infrastructure
-
-### **Comprehensive Testing Suite**
-- **API Testing Class**: 350+ lines of automated testing
-- **Smoke Tests**: Quick health checks for CI/CD
-- **PowerShell Scripts**: Windows-compatible testing
-- **Postman Collection**: Complete API documentation
-- **Manual Testing Checklist**: 500+ lines of testing procedures
-
-### **Testing Commands**
-```bash
-npm run test:smoke    # Quick smoke tests
-npm run test:api      # Comprehensive API tests
-npm run test:dev      # Test + dev server
-npm run postbuild     # Post-build validation
-```
+- Users (5 role types), Products, Categories, Orders
+- Shopping Cart, Reviews, Addresses
+- Notifications, Coupons, Analytics
 
 ## 🚀 Quick Start
 
@@ -140,11 +97,12 @@ cp .env.example .env.local
 npx prisma generate
 npx prisma db push
 
-# Seed database (optional)
+# Seed database with sample data
 npm run db:seed
 
-# Start development server
-npm run dev
+# Start development servers
+npm run dev        # Frontend (port 3000)
+npm run api        # Backend API (port 5000)
 ```
 
 ### **Environment Variables**
@@ -156,12 +114,32 @@ DATABASE_URL="file:./dev.db"
 NEXTAUTH_SECRET="your-secret-key"
 NEXTAUTH_URL="http://localhost:3000"
 
+# API Configuration
+API_BASE_URL="http://localhost:5000"
+
 # Optional: External services
-GOOGLE_CLIENT_ID=""
-GOOGLE_CLIENT_SECRET=""
 STRIPE_SECRET_KEY=""
 STRIPE_PUBLISHABLE_KEY=""
 ```
+
+## 🔌 API Endpoints
+
+### **Landing Page API** (`http://localhost:5000`)
+```
+GET    /health                        # API health check
+GET    /api/landing/all              # All landing page data
+GET    /api/landing/featured-products # Featured products
+GET    /api/landing/categories       # Product categories
+GET    /api/landing/testimonials     # User testimonials
+GET    /api/landing/stats            # Platform statistics
+```
+
+### **Core Features**
+- **Real-time Data**: Dynamic content from database
+- **BD Taka Formatting**: Native ৳ currency support
+- **Role-based Access**: Secure authentication system
+- **Responsive Design**: Mobile-first approach
+- **Modern UI**: Gradient backgrounds and animations
 
 ## 📁 Project Structure
 
@@ -169,73 +147,104 @@ STRIPE_PUBLISHABLE_KEY=""
 agromart/
 ├── src/
 │   ├── app/
-│   │   ├── api/              # API routes (40+ endpoints)
+│   │   ├── api/              # Next.js API routes
 │   │   ├── auth/             # Authentication pages
+│   │   │   ├── signin/       # Role-based signin (5 roles)
+│   │   │   └── signup/       # Public registration (4 roles)
 │   │   └── (dashboard)/      # Protected dashboard routes
-│   ├── components/           # Reusable UI components
+│   ├── components/
+│   │   ├── ui/               # Custom UI components
+│   │   │   └── tabs.tsx      # Custom tabs component
+│   │   └── common/           # Shared components
+│   │       └── Header.tsx    # Enhanced navigation header
 │   ├── lib/                  # Utilities and configurations
-│   ├── store/                # Redux store and slices
-│   └── types/                # TypeScript type definitions
+│   │   └── utils.ts          # BD Taka formatting utilities
+│   └── types/                # TypeScript definitions
+├── api/                      # Express.js backend
+│   ├── server.js             # Main server file
+│   └── controllers/          # API controllers
+│       └── LandingController.ts
 ├── prisma/
 │   ├── schema.prisma         # Database schema
 │   └── seed.ts               # Database seeding
-├── scripts/                  # Testing and utility scripts
-├── docs/                     # Documentation
-└── postman/                  # API collection
+└── database/
+    └── dev.db                # SQLite database
 ```
 
-## 🔒 Security Features
+## 🎨 UI/UX Features
 
-- **Authentication**: NextAuth.js with JWT tokens
-- **Authorization**: Role-based access control
+### **Design System**
+- **Color Scheme**: Green-based agricultural theme
+- **Typography**: Modern, readable fonts
+- **Animations**: Smooth hover effects and transitions
+- **Responsiveness**: Mobile-first responsive design
+- **Accessibility**: ARIA compliant components
+
+### **Key Components**
+- **Enhanced Header**: Gradient backgrounds with category dropdown
+- **Role Cards**: Beautiful authentication role selection
+- **Product Cards**: Modern product display with BD Taka pricing
+- **Custom Tabs**: Performance-optimized tab component
+- **Responsive Layout**: Compressed, space-efficient designs
+
+## 🔒 Security & Authentication
+
+- **Role-Based Access**: 5 distinct user roles with appropriate permissions
+- **Secure Admin Access**: Admin signin available, public admin registration blocked
+- **Password Security**: bcryptjs hashing with salt rounds
 - **Input Validation**: Comprehensive request validation
-- **CSRF Protection**: Built-in Next.js protection
-- **Password Security**: bcryptjs hashing
-- **SQL Injection Prevention**: Prisma ORM protection
+- **CORS Protection**: Configured for secure cross-origin requests
 
-## 📊 Performance Features
+## 💱 Currency & Localization
 
-- **Next.js 15 with Turbopack**: Fast development and builds
-- **Image Optimization**: Next.js automatic optimization
-- **API Route Optimization**: Efficient database queries
-- **Caching Strategies**: Response caching and memoization
-- **Pagination**: Efficient data loading
-- **Search Optimization**: Indexed database queries
+- **BD Taka Integration**: Native Bangladesh Taka (৳) support
+- **formatBDTaka() Function**: Consistent currency formatting
+- **Local Context**: Designed for Bangladesh agricultural market
+- **Regional Products**: Local agricultural product categories
 
-## 🌐 Deployment
+## 🧪 Testing & Quality
 
-### **Development**
+### **Comprehensive Testing**
+- **API Testing**: Express.js endpoint validation
+- **Frontend Testing**: Component and integration tests
+- **Database Testing**: Prisma schema validation
+- **Cross-browser**: Modern browser compatibility
+
+### **Development Tools**
 ```bash
-npm run dev          # Development server
+npm run dev          # Development with hot reload
 npm run build        # Production build
 npm run start        # Production server
-npm run lint         # Code linting
+npm run db:studio    # Prisma database browser
+npm run db:reset     # Reset database
 ```
 
-### **Database Commands**
-```bash
-npm run db:generate  # Generate Prisma client
-npm run db:push      # Push schema to database
-npm run db:migrate   # Run migrations
-npm run db:reset     # Reset database
-npm run db:seed      # Seed database
-npm run db:studio    # Open Prisma Studio
-```
+## 🌐 Deployment Ready
 
 ### **Production Deployment**
-1. Set up PostgreSQL database
-2. Configure environment variables
-3. Run database migrations
-4. Deploy to Vercel/Netlify/Railway
-5. Configure domain and SSL
+- **Frontend**: Vercel/Netlify ready
+- **Backend**: Railway/Heroku ready
+- **Database**: PostgreSQL production ready
+- **Environment**: Production configuration included
 
-## 📈 Analytics & Monitoring
+### **Performance Optimizations**
+- **Next.js 15**: Latest performance improvements
+- **Image Optimization**: Automatic Next.js optimization
+- **API Caching**: Efficient database queries
+- **Bundle Optimization**: Tree shaking and code splitting
 
-- **Order Analytics**: Revenue tracking and insights
-- **User Analytics**: Registration and engagement metrics
-- **Product Analytics**: View counts and popularity
-- **Performance Monitoring**: API response times
-- **Error Tracking**: Comprehensive error logging
+## 📊 Database Overview
+
+### **Pre-seeded Data**
+- **8 Products**: Across all categories with realistic pricing
+- **7 Users**: Including admin account (admin@agromart.com)
+- **Categories**: Complete agricultural product categories
+- **Sample Data**: Ready-to-use development data
+
+### **Admin Access**
+- **Email**: admin@agromart.com
+- **Role**: Administrator
+- **Access**: Full platform management capabilities
 
 ## 🤝 Contributing
 
@@ -247,10 +256,9 @@ npm run db:studio    # Open Prisma Studio
 
 ## 📝 Documentation
 
-- [Project Summary](PROJECT_SUMMARY.md) - Complete project overview
-- [Testing Documentation](TESTING_DOCUMENTATION.md) - Testing infrastructure guide
-- [API Testing Checklist](docs/API_TESTING_CHECKLIST.md) - Manual testing procedures
-- [Postman Collection](postman/AgroMart-API-Collection.json) - API collection
+- [API Documentation](docs/API_DOCUMENTATION.md) - Complete API reference
+- [Database Schema](docs/DATABASE_SCHEMA.md) - Database structure
+- [Development Guide](docs/DEVELOPMENT.md) - Setup and development guide
 
 ## 📄 License
 
@@ -261,161 +269,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Mehrab Hasan**
 - GitHub: [@TM-Mehrab-Hasan](https://github.com/TM-Mehrab-Hasan)
 - LinkedIn: [Mehrab Hasan](https://linkedin.com/in/tm-mehrab-hasan)
-
-## 🙏 Acknowledgments
-
-- Built with [Next.js](https://nextjs.org/)
-- Database powered by [Prisma](https://prisma.io/)
-- Authentication by [NextAuth.js](https://next-auth.js.org/)
-- UI components by [Radix UI](https://radix-ui.com/)
-- Styled with [Tailwind CSS](https://tailwindcss.com/)
-
----
-
-**Built with ❤️ for the agricultural community** 🌾
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/TM-Mehrab-Hasan/AgroMart)
-```
-- **👥 Customers** - People who buy agricultural products
-- **🏪 Shop Owners** - Intermediaries who buy from farmers and resell with their own pricing
-- **🚜 Sellers/Producers** - Farmers, fishermen, dairy farmers, etc.
-
-### Global Roles
-- **👨‍💼 Admin** - Oversees the entire platform across all categories
-- **🏍️ Rider** - Delivery personnel who handle orders based on coverage areas
-
-## 🌱 Agricultural Categories
-
-- **🌾 Crops** - Grain, rice, wheat, etc.
-- **🥕 Vegetables** - Fresh produce
-- **🥛 Dairy** - Milk, cheese, yogurt, etc.
-- **🐟 Fish** - Fresh fish and seafood
-- **📦 More categories** - Expandable for future needs
-
-## ✨ Key Features
-
-- 🛒 **Multi-category marketplace** with unified interface
-- 👤 **Role-based authentication** system
-- 📦 **Inventory management** for tracking products
-- 💰 **Flexible pricing** - Direct sales or through shop owners
-- 🎫 **Discount & coupon** system
-- 🚚 **Area-based delivery** system
-- 💳 **Multiple payment gateways**
-- 📱 **Responsive design** for all devices
-
-## 🛠️ Tech Stack
-
-### Frontend & Backend
-- **⚡ Next.js 15+** - Full-stack React framework with App Router
-- **📘 TypeScript** - Type-safe development
-- **🎨 Tailwind CSS** - Utility-first CSS framework
-- **🧩 Shadcn/ui** - High-quality UI components
-
-### Database & Authentication
-- **🐘 PostgreSQL** - Robust relational database
-- **🔐 NextAuth.js** - Secure authentication with role management
-
-### State Management & Storage
-- **🔄 Redux Toolkit** - Predictable state management
-- **📂 Local Storage** - Image storage (expandable to cloud)
-
-### Payment Integration
-- **💳 Stripe** - International payments
-- **📱 Local Mobile Banking** - Nagad, bKash, Rocket
-- **🏦 Bank Transfers** - Traditional banking
-- **💵 Cash on Delivery** - With additional charges
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 18+ 
-- npm or yarn
-- PostgreSQL database
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/TM-Mehrab-Hasan/AgroMart.git
-   cd AgroMart
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env.local
-   # Edit .env.local with your configuration
-   ```
-
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-## 📁 Project Structure
-
-```
-agromart/
-├── src/
-│   ├── app/              # App Router pages
-│   ├── components/       # Reusable UI components
-│   ├── lib/              # Utility functions and configurations
-│   ├── store/            # Redux store and slices
-│   └── types/            # TypeScript type definitions
-├── public/               # Static assets
-└── prisma/              # Database schema and migrations
-```
-
-## 🔧 Development Roadmap
-
-- [Testing Documentation](TESTING_DOCUMENTATION.md) - Testing infrastructure guide
-- [API Testing Checklist](docs/API_TESTING_CHECKLIST.md) - Manual testing procedures
-- [Postman Collection](postman/AgroMart-API-Collection.json) - API collection
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Author
-
-**Mehrab Hasan**
-- GitHub: [@TM-Mehrab-Hasan](https://github.com/TM-Mehrab-Hasan)
-- LinkedIn: [Mehrab Hasan](https://linkedin.com/in/tm-mehrab-hasan)
-
-## 🙏 Acknowledgments
-
-- Built with [Next.js](https://nextjs.org/)
-- Database powered by [Prisma](https://prisma.io/)
-- Authentication by [NextAuth.js](https://next-auth.js.org/)
-- UI components by [Radix UI](https://radix-ui.com/)
-- Styled with [Tailwind CSS](https://tailwindcss.com/)
-
----
-
-**Built with ❤️ for the agricultural community** 🌾
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/TM-Mehrab-Hasan/AgroMart)
-
-## 🤝 Contributing
-
-We welcome contributions! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Author
-
-**Mehrab Hasan**
 - Portfolio: [TM-Mehrab-Hasan](https://tm-mehrab-hasan.github.io/)
 
+## 🙏 Acknowledgments
+
+- Built with [Next.js](https://nextjs.org/)
+- Database powered by [Prisma](https://prisma.io/)
+- UI styled with [Tailwind CSS](https://tailwindcss.com/)
+- Icons by [Lucide React](https://lucide.dev/)
+- Backend powered by [Express.js](https://expressjs.com/)
+
 ---
 
-**Built with ❤️ for the agricultural community** 🌾
+**Built with ❤️ for the agricultural community of Bangladesh** 🇧🇩 🌾
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/TM-Mehrab-Hasan/AgroMart)

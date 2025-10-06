@@ -9,7 +9,7 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Wheat, Menu, ShoppingCart, User, Search, LogOut, Settings, Package, BarChart3 } from "lucide-react";
+import { Wheat, Menu, ShoppingCart, User, Search, LogOut, Settings, Package, BarChart3, Leaf, Fish, Milk } from "lucide-react";
 import { getUserRoleDisplayName, getUserRoleColor } from "@/lib/auth/permissions";
 
 export function Header() {
@@ -17,10 +17,10 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const categories = [
-    { name: "Crops", href: "/category/crops" },
-    { name: "Vegetables", href: "/category/vegetables" },
-    { name: "Dairy", href: "/category/dairy" },
-    { name: "Fish", href: "/category/fish" },
+    { name: "Crops", href: "/categories/crops", icon: Wheat, description: "Rice, wheat, grains" },
+    { name: "Vegetables", href: "/categories/vegetables", icon: Leaf, description: "Fresh produce" },
+    { name: "Dairy", href: "/categories/dairy", icon: Milk, description: "Milk, cheese, yogurt" },
+    { name: "Fish", href: "/categories/fish", icon: Fish, description: "Fresh fish & seafood" },
   ];
 
   const getUserDashboardLink = () => {
@@ -42,12 +42,16 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-gradient-to-r from-white via-green-50 to-white backdrop-blur-sm shadow-sm supports-[backdrop-filter]:bg-white/90">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Wheat className="h-8 w-8 text-green-600" />
-          <span className="text-2xl font-bold text-gray-800">AgroMart</span>
+        <Link href="/" className="flex items-center gap-2 group transition-transform hover:scale-105">
+          <div className="p-2 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors">
+            <Wheat className="h-6 w-6 text-green-600" />
+          </div>
+          <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
+            AgroMart
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -55,43 +59,60 @@ export function Header() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="bg-transparent hover:bg-green-50 data-[state=open]:bg-green-50">
+                  Categories
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="grid gap-3 p-4 w-[400px] grid-cols-2">
-                    {categories.map((category) => (
-                      <Link
-                        key={category.name}
-                        href={category.href}
-                        className="block p-3 rounded-lg hover:bg-gray-50 transition-colors"
-                      >
-                        <div className="font-medium">{category.name}</div>
-                      </Link>
-                    ))}
+                  <div className="grid gap-2 p-6 w-[500px] grid-cols-2">
+                    {categories.map((category) => {
+                      const IconComponent = category.icon;
+                      return (
+                        <Link
+                          key={category.name}
+                          href={category.href}
+                          className="group block p-4 rounded-lg hover:bg-green-50 transition-all duration-200 border border-transparent hover:border-green-200 hover:shadow-md"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors">
+                              <IconComponent className="h-5 w-5 text-green-600" />
+                            </div>
+                            <div>
+                              <div className="font-semibold text-gray-900 group-hover:text-green-700">
+                                {category.name}
+                              </div>
+                              <div className="text-sm text-gray-500 group-hover:text-green-600">
+                                {category.description}
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
           
-          <Link href="/sellers" className="text-gray-600 hover:text-gray-900 transition-colors">
+          <Link href="/sellers" className="text-gray-600 hover:text-green-600 transition-all duration-200 font-medium hover:bg-green-50 px-3 py-2 rounded-lg">
             For Sellers
           </Link>
-          <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
+          <Link href="/about" className="text-gray-600 hover:text-green-600 transition-all duration-200 font-medium hover:bg-green-50 px-3 py-2 rounded-lg">
             About
           </Link>
         </div>
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-3">
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" className="hover:bg-green-50 hover:text-green-600">
             <Search className="h-5 w-5" />
           </Button>
           
           {session?.user ? (
             <>
-              <Button variant="ghost" size="icon" className="relative">
+              <Button variant="ghost" size="icon" className="relative hover:bg-green-50 hover:text-green-600">
                 <ShoppingCart className="h-5 w-5" />
-                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-green-600 hover:bg-green-700">
                   0
                 </Badge>
               </Button>
@@ -177,18 +198,27 @@ export function Header() {
                   <span className="text-xl font-bold">AgroMart</span>
                 </div>
                 
-                <div className="space-y-3">
-                  <h3 className="font-semibold text-gray-900">Categories</h3>
-                  {categories.map((category) => (
-                    <Link
-                      key={category.name}
-                      href={category.href}
-                      className="block py-2 text-gray-600 hover:text-gray-900"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {category.name}
-                    </Link>
-                  ))}
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-gray-900 mb-3">Categories</h3>
+                  {categories.map((category) => {
+                    const IconComponent = category.icon;
+                    return (
+                      <Link
+                        key={category.name}
+                        href={category.href}
+                        className="flex items-center gap-3 py-3 px-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <div className="p-2 bg-gray-100 rounded-lg">
+                          <IconComponent className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <div className="font-medium">{category.name}</div>
+                          <div className="text-sm text-gray-400">{category.description}</div>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
                 
                 <div className="space-y-3 border-t pt-4">

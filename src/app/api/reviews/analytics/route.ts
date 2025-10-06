@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     const riderId = searchParams.get("riderId");
 
     // Build where clause based on user role and filters
-    let where: Record<string, any> = {};
+    const where: Record<string, any> = {};
     
     if (session.user.role === "SHOP_OWNER") {
       // Shop owners can only see their shop's reviews

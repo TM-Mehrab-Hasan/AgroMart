@@ -22,8 +22,8 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
 
     // Build where clause based on filter
-    let where: Record<string, any> = {};
-    let orderBy: Record<string, any> = { createdAt: 'desc' };
+    const where: Record<string, any> = {};
+    const orderBy: Record<string, any> = { createdAt: 'desc' };
 
     switch (filter) {
       case "flagged":

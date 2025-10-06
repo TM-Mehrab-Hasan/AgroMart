@@ -26,7 +26,16 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search');
 
     // Build where clause
-    const where: any = {
+    const where: {
+      status?: ProductStatus;
+      category?: ProductCategory;
+      price?: { gte?: number; lte?: number };
+      location?: { contains: string; mode: 'insensitive' };
+      isOrganic?: boolean;
+      sellerId?: string;
+      shopId?: string;
+      OR?: Array<{ name?: { contains: string; mode: 'insensitive' }; description?: { contains: string; mode: 'insensitive' } }>;
+    } = {
       status: status || ProductStatus.ACTIVE,
     };
 
