@@ -9,7 +9,25 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Wheat, Menu, ShoppingCart, User, Search, LogOut, Settings, Package, BarChart3, Leaf, Fish, Milk } from "lucide-react";
+import { 
+  Search, 
+  ShoppingCart, 
+  User, 
+  Bell, 
+  ChevronDown, 
+  Wheat, 
+  Leaf, 
+  Fish, 
+  Milk,
+  Apple,
+  Beef,
+  Shield,
+  BarChart3,
+  Package,
+  Settings,
+  LogOut,
+  Menu
+} from "lucide-react";
 import { getUserRoleDisplayName, getUserRoleColor } from "@/lib/auth/permissions";
 
 export function Header() {
@@ -19,8 +37,12 @@ export function Header() {
   const categories = [
     { name: "Crops", href: "/categories/crops", icon: Wheat, description: "Rice, wheat, grains" },
     { name: "Vegetables", href: "/categories/vegetables", icon: Leaf, description: "Fresh produce" },
+    { name: "Fruits", href: "/categories/fruits", icon: Apple, description: "Seasonal & exotic fruits" },
     { name: "Dairy", href: "/categories/dairy", icon: Milk, description: "Milk, cheese, yogurt" },
     { name: "Fish", href: "/categories/fish", icon: Fish, description: "Fresh fish & seafood" },
+    { name: "Meat", href: "/categories/meat", icon: Beef, description: "Poultry, beef, goat" },
+    { name: "Grains", href: "/categories/grains", icon: Wheat, description: "Pulses & grain products" },
+    { name: "Organic", href: "/categories/organic", icon: Shield, description: "Certified organic" },
   ];
 
   const getUserDashboardLink = () => {
